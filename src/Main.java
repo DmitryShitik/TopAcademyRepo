@@ -29,5 +29,6 @@ public class Main {
                         .log(Level.SEVERE, null, ex);
             }
         }
+        System.out.println();
     }
 }
