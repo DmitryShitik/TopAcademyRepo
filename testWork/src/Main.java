@@ -1,35 +1,33 @@
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Main {
     public static void main(String[] args) {
-        HashSet<Fish> fishes = new HashSet<>();
-        fishes.add(new Fish("eel", 1.5, 120));
-        fishes.add(new Fish("salmon", 2.5, 180));
-        fishes.add(new Fish("carp", 3.5, 80));
-        fishes.add(new Fish("trout", 2.2, 150));
-        System.out.println("Collection:" + fishes);
-        System.out.println("Collection's size:" + fishes.size());
-        System.out.println("before:");
-        fishes.forEach(f -> System.out.println(f));
-        fishes.stream()
-                .filter(f -> f.getPrice() > 100)
-                .forEach(f -> f.setPrice(f.getPrice() * 0.9));
-        System.out.println("after");
-        fishes.forEach(f -> System.out.println(f));
-        List<Fish> selected = fishes.stream()
-                .filter(f -> f.getPrice() > 100)
-                .collect(Collectors.toList());
-
-        System.out.println("after");
-        selected.forEach(f -> System.out.println(f));
-
-        Stream.of("Argentina", "Bulgaria",
-                        "Canada","Denmark","Ukraine","USA")
-                .filter((c)->c.startsWith("U"))
-                .forEach(c->System.out.println(c));
-
-        
+        FileInputStream in = null;
+        FileOutputStream out = null;
+        try {
+            in = new FileInputStream(new File("D:\\lessons\\testWork\\tmp\\user\\java\\bin\\test.txt"));
+            File file = new File("outputFile3.txt");
+            out = new FileOutputStream(file);
+            int c;
+            while ((c = in.read()) != -1) {
+                if (c < 65) out.write(c);
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Main.class.getName()).
+                    log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).
+                    log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                in.close();
+                out.close();
+            } catch (IOException ex) {
+                Logger.getLogger(Main.class.getName()).
+                        log(Level.SEVERE, null, ex);
+            }
+        }
     }
 }
